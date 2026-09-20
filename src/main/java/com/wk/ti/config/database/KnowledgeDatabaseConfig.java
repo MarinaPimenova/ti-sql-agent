@@ -5,19 +5,17 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.autoconfigure.DataSourceProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.jdbc.core.simple.JdbcClient;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 
 @Configuration
-@EnableJpaRepositories(
-        entityManagerFactoryRef = "knowledgeEntityManagerFactory",
-        transactionManagerRef = "knowledgeTransactionManager"
-)
+@EnableTransactionManagement
 public class KnowledgeDatabaseConfig {
 
     @Bean
-    @ConfigurationProperties("spring.datasource.knowledge")
+    @ConfigurationProperties("datasource.knowledge")
     public DataSourceProperties knowledgeDataSourceProperties() {
         return new DataSourceProperties();
     }
@@ -28,5 +26,10 @@ public class KnowledgeDatabaseConfig {
             DataSourceProperties properties) {
 
         return properties.initializeDataSourceBuilder().build();
+    }
+
+    @Bean
+    public JdbcClient jdbcClient(@Qualifier("knowledgeDataSource") DataSource knowledgeDataSource) {
+        return JdbcClient.create(knowledgeDataSource);
     }
 }

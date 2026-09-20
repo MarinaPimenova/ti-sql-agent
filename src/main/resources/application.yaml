@@ -29,19 +29,6 @@ spring:
           batch_size: 30
 
   datasource:
-    knowledge:
-      url: ${KNOWLEDGE_DB_URL:jdbc:postgresql://localhost:5432/knowledge_db}
-      username: ${KNOWLEDGE_USER:knowledge_user}
-      password: ${KNOWLEDGE_PASSWORD:qwerty}
-      driver-class-name: org.postgresql.Driver
-      hikari:
-        minimum-idle: 5
-        maximum-pool-size: 10
-        connection-timeout: 50000
-        leak-detection-threshold: 20000
-        max-lifetime: 1800000
-        idle-timeout: 600000
-
     assistant:
       url: ${ASSISTANT_DB_URL:jdbc:postgresql://localhost:5434/assistant_db}
       username: ${ASSISTANT_USER:assistant_user}
@@ -69,6 +56,12 @@ spring:
       on-client-errors: true
     timeout: 40000ms
 
+datasource:
+  knowledge:
+    url: ${KNOWLEDGE_DB_URL:jdbc:postgresql://localhost:5432/knowledge_db}
+    username: ${KNOWLEDGE_USER:knowledge_user}
+    password: ${KNOWLEDGE_PASSWORD:qwerty}
+    driver-class-name: org.postgresql.Driver
 
 ms:
   cors:
